@@ -1,58 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quill Text Editor</title>
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <style>
         /* Additional style to set font size in the editor */
         #editor-container .ql-editor p {
-            font-size: 50px; /* Default font size */
+            font-size: 50px;
+            /* Default font size */
         }
+
         @font-face {
             font-family: 'Jameel Noori Nastaleeq Kasheeda';
-            src: url('Jameel Noori Nastaleeq Kasheeda.ttf') format('truetype'); /* Update the path to the actual location of your font file */
+            src: url('Jameel Noori Nastaleeq Kasheeda.ttf') format('truetype');
             font-weight: normal;
             font-style: normal;
         }
+
+        .ql-toolbar input#customColorPicker {
+            height: 20px;
+        }
     </style>
 </head>
-<body>
-    <div>
-        <label for="fontFamily">Font Family:</label>
-        <select id="fontFamily">
-            <option value="Arial, sans-serif">Arial</option>
-            <option value="Georgia, serif">Georgia</option>
-            <option value="Times New Roman, serif">Times New Roman</option>
-            <option value="Courier New, monospace">Courier New</option>
-            <option value="Verdana, sans-serif">Verdana</option>
-            <option value="Jameel Noori Nastaleeq Kasheeda">Jameel Noori Nastaleeq</option>
-        </select>
 
-        <!-- Input field for font size in pixels -->
-        <label for="fontSize">Font Size:</label>
-        <input type="text" id="fontSize" placeholder="Enter font size (px)">
+<body>
+    <div class="container my-4" style="max-width: 800px;">
+        <h1 class="text-center mb-5">Free Text Editor</h1>
+        <div class="d-flex justify-content-between mb-4">
+            <div class="d-flex justify-content-between align-items-center" style="width: 45%;">
+                <label for="fontFamily" style="width: 150px;">Font Family:</label>
+                <select id="fontFamily" class="form-control">
+                    <option value="Arial, sans-serif">Arial</option>
+                    <option value="Georgia, serif">Georgia</option>
+                    <option value="Times New Roman, serif">Times New Roman</option>
+                    <option value="Courier New, monospace">Courier New</option>
+                    <option value="Verdana, sans-serif">Verdana</option>
+                    <option value="Jameel Noori Nastaleeq Kasheeda">Jameel Noori Nastaleeq</option>
+                </select>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center ml-3" style="width: 45%;">
+                <label for="fontSize" style="width: 150px;">Font Size:</label>
+                <input type="text" id="fontSize" class="form-control" placeholder="Enter font size (px)">
+            </div>
+        </div>
+        <div id="editor-container"></div>
+
+        <div class="text-end">
+            <button id="downloadButton" class="btn btn-primary mt-3">Download Text</button>
+        </div>
     </div>
-    <div id="editor-container"></div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <script>
         var quill = new Quill('#editor-container', {
             theme: 'snow',
             modules: {
                 toolbar: [
-                    ['bold', 'italic', 'underline', 'strike'],        // Basic formatting options
-                    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],        // Headers
+                    ['bold', 'italic', 'underline', 'strike'],        // Headers
                     [{ 'list': 'ordered' }, { 'list': 'bullet' }],    // Lists
                     [{ 'script': 'sub' }, { 'script': 'super' }],    // Subscript and Superscript
                     [{ 'indent': '-1' }, { 'indent': '+1' }],        // Indents
                     [{ 'direction': 'rtl' }],                         // Text direction
                     [{ 'size': ['small', false, 'large', 'huge'] }],  // Font size
                     [{ 'color': [] }, { 'background': [] }],          // Font and background color
-                    ['clean'],                                        // Remove formatting
-                    [{ 'font': ['Arial', 'Georgia', 'Times New Roman', 'Courier New', 'Verdana'] }],
                     [{ 'custom-color': '#000000' }]
                 ]
             }
@@ -80,6 +97,28 @@
             $('.ql-editor > p').css('font-size', fontSize + 'px');
             quill.format('size', fontSize + 'px');
         });
+        document.getElementById('downloadButton').addEventListener('click', function () {
+        // Use html2canvas to capture the Quill editor content with a transparent background
+        html2canvas(document.getElementById('editor-container'), {
+            backgroundColor: null, // Set background color to null for transparency
+        }).then(function (canvas) {
+            // Convert the canvas to a data URL
+            var dataUrl = canvas.toDataURL('image/png');
+
+            // Create a link element to trigger the download
+            var a = document.createElement('a');
+            a.href = dataUrl;
+            a.download = 'edited_content.png';
+
+            // Append the link element to the document and trigger the click event
+            document.body.appendChild(a);
+            a.click();
+
+            // Remove the link element from the document
+            document.body.removeChild(a);
+        });
+    });
     </script>
 </body>
+
 </html>
