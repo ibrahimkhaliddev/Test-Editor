@@ -13,3 +13,18 @@
 .ql-toolbar input#customColorPicker {
     height: 20px;
 }
+
+button#shadowBtn {
+    margin-left: 20px;
+    margin-top: -3px;
+    border: 1px solid #ccc;
+    font-size: 13px;
+    width: auto;
+    border-radius: 3px;
+    padding: 0px;
+    padding: 0px 10px;
+}
+
+.showShadowBox{
+    display: flex !important;
+}
