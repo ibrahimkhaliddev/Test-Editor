@@ -3,11 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Text Editor</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Quill Text Editor</title>
+    <!-- Include Quill stylesheet -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 </head>
 <body>
-    
+    <div>
+        <label for="fontFamily">Font Family:</label>
+        <select id="fontFamily">
+            <option value="Arial, sans-serif">Arial</option>
+            <option value="Georgia, serif">Georgia</option>
+            <option value="Times New Roman, serif">Times New Roman</option>
+            <option value="Courier New, monospace">Courier New</option>
+            <option value="Verdana, sans-serif">Verdana</option>
+            <!-- Add more font options as needed -->
+        </select>
+    </div>
+<!-- Create a div to hold the Quill editor -->
+<div id="editor-container"></div>
+
+<!-- Include Quill library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+<script>
+    // Initialize Quill with the toolbar options
+    var quill = new Quill('#editor-container', {
+        theme: 'snow',
+        modules: {
+            toolbar: [
+                ['bold', 'italic', 'underline', 'strike'],        // Basic formatting options
+                [{ 'header': [1, 2, 3, 4, 5, 6, false] }],        // Headers
+                [{ 'list': 'ordered' }, { 'list': 'bullet' }],    // Lists
+                [{ 'script': 'sub' }, { 'script': 'super' }],    // Subscript and Superscript
+                [{ 'indent': '-1' }, { 'indent': '+1' }],        // Indents
+                [{ 'direction': 'rtl' }],                         // Text direction
+                [{ 'size': ['small', false, 'large', 'huge'] }],  // Font size
+                [{ 'color': [] }, { 'background': [] }],          // Font and background color
+                ['clean'],                                        // Remove formatting
+                [{ 'font': ['Arial', 'Georgia', 'Times New Roman', 'Courier New', 'Verdana'] }],
+                [{ 'custom-color': '#000000' }]
+            ]
+        }
+    });
+
+    // Add a custom color picker button
+    var customColorButton = document.querySelector('.ql-custom-color');
+    customColorButton.innerHTML = '<input type="color" id="customColorPicker">';
+
+    // Event listener for the custom color picker
+    document.getElementById('customColorPicker').addEventListener('input', function () {
+        var customColor = this.value;
+        quill.format('color', customColor);
+    });
+        // Event listener for font family change
+        $('#fontFamily').change(function () {
+        var fontFamily = $(this).val();
+        $('.ql-editor > p').css('font-family', fontFamily)
+        quill.format('font', fontFamily);
+    });
+</script>
+
 </body>
-<script src="script.js"></script>
 </html>
