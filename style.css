@@ -1,5 +1,5 @@
 #editor-container .ql-editor p {
-    font-size: 50px;
+    font-size: 25px;
     width: max-content;
 }
 
@@ -14,9 +14,28 @@
     height: 20px;
 }
 
+.ql-editor{
+    height: 150px;
+}
+
+.shadowBtnDiv{
+    margin-top: -3px;
+
+}
+
+.clearShadow{
+    display: flex !important;
+    align-items: center;
+    margin-left: 3px;
+    font-size: 12px;
+}
+
+#shadowColor{
+    width: 62%;
+}
+
 button#shadowBtn {
     margin-left: 20px;
-    margin-top: -3px;
     border: 1px solid #ccc;
     font-size: 13px;
     width: auto;
