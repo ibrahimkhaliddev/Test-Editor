@@ -1,4 +1,15 @@
+#editor-container .ql-editor p {
+    font-size: 50px;
+    width: max-content;
+}
+
 @font-face {
-    font-family: 'Kasheeda';
-    src: url('Jameel Noori Nastaleeq Kasheeda.ttf') format('TrueType');
+    font-family: 'Jameel Noori Nastaleeq Kasheeda';
+    src: url('Jameel Noori Nastaleeq Kasheeda.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.ql-toolbar input#customColorPicker {
+    height: 20px;
 }
